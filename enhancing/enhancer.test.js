@@ -1,12 +1,14 @@
-const { repair, succeed, fail } = require("./enhancer.js");
+const { repair, succeed, fail, get } = require("./enhancer.js");
 
-describe("enhancer object", () => {
+describe("enhancer object methods", () => {
+  // Repair Method Tests
   describe("repair", () => {
     it("restores durability property to 100", () => {
       expect(repair({ durability: 89 }).durability).toBe(100);
     });
   });
 
+  // Succeed Method Tests
   describe("succeed", () => {
     it("item's enhancement increases by 1", () => {
       expect(succeed({ enhancement: 15, durability: 44 })).toEqual({
@@ -23,6 +25,7 @@ describe("enhancer object", () => {
     });
   });
 
+  // Fail Method Tests
   describe("fail", () => {
     it("item's enhancement less than 15, durability should be decreased by 5", () => {
       expect(fail({ enhancement: 14, durability: 50 })).toEqual({
@@ -42,6 +45,23 @@ describe("enhancer object", () => {
       expect(fail({ enhancement: 17, durability: 60 })).toEqual({
         enhancement: 16,
         durability: 50
+      });
+    });
+  });
+
+  // Get Method Tests
+  describe("get", () => {
+    it("if enhancement is equal to 0, name should remain unchanged", () => {
+      expect(get({ enhancement: 0, name: "James" })).toEqual({
+        enhancement: 0,
+        name: "James"
+      });
+    });
+
+    it("if enhancement is greater than 0, name should be preced by [+enhancement]", () => {
+      expect(get({ enhancement: 11, name: "John" })).toEqual({
+        enhancement: 11,
+        name: "[+11] John"
       });
     });
   });
