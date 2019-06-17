@@ -5,6 +5,7 @@ describe("enhancer object methods", () => {
   describe("repair", () => {
     it("restores durability property to 100", () => {
       expect(repair({ durability: 89 }).durability).toBe(100);
+      expect(repair({ durability: 70 }).durability).toBe(100);
     });
   });
 
@@ -14,6 +15,11 @@ describe("enhancer object methods", () => {
       expect(succeed({ enhancement: 15, durability: 44 })).toEqual({
         enhancement: 16,
         durability: 44
+      });
+
+      expect(succeed({ enhancement: 12, durability: 66 })).toEqual({
+        enhancement: 13,
+        durability: 66
       });
     });
 
@@ -32,6 +38,11 @@ describe("enhancer object methods", () => {
         enhancement: 14,
         durability: 45
       });
+
+      expect(fail({ enhancement: 5, durability: 30 })).toEqual({
+        enhancement: 5,
+        durability: 25
+      });
     });
 
     it("item's enhancement is 15 or more, durability should be decreased by 10", () => {
@@ -39,12 +50,21 @@ describe("enhancer object methods", () => {
         enhancement: 15,
         durability: 50
       });
+
+      expect(fail({ enhancement: 16, durability: 33 })).toEqual({
+        enhancement: 16,
+        durability: 23
+      });
     });
 
-    it("item's enhancement is great than 16, enhancement level decreases by 1", () => {
+    it("item's enhancement is greater than 16, enhancement level decreases by 1", () => {
       expect(fail({ enhancement: 17, durability: 60 })).toEqual({
         enhancement: 16,
         durability: 50
+      });
+      expect(fail({ enhancement: 20, durability: 80 })).toEqual({
+        enhancement: 19,
+        durability: 70
       });
     });
   });
